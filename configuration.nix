@@ -5,43 +5,37 @@
 { config, lib, pkgs, ... }:
 
 {
-  programs.aria2 = {
+  users.defaultUserShell = pkgs.fish;
+  environment.systemPackages = [
+    pkgs.aria2
+    pkgs.helix
+  ];
+
+  programs.fish = {
     enable = true;
-    settings = {
-      continue = true;
-      max-connection-per-server = 16;
-      min-split-size = "8M";
-      retry-wait = 1;
-      split = 32;
-      ftp-pasv = true;
-      max-upload-limit = "1K";
-      seed-time = 0;
+    shellAliases = {
+      gss = "git status --short";
+      gst = "git status";
+      ga = "git add";
+      gaa = "git add --all";
+      gcmsg = "git commit --message";
+      gcam = "git commit --all --message";
+      gp = "git push";
+      gd = "git diff";
+      gc = "git clone --recurse-submodules";
     };
+    interactiveShellInit = "set -U fish_greeting";
   };
 
   programs.git = {
     enable = true;
-    extraConfig = {
+    config = {
       core.editor = "hx";
       init.defaultBranch = "main";
     };
   };
 
-  programs.helix = {
-    defaultEditor = true;
+  programs.starship = {
     enable = true;
-    settings = {
-      editor = {
-        true-color = true;
-        cursor-shape = {
-          insert = "bar";
-          normal = "block";
-          select = "underline";
-        };
-      };
-      keys.insert = {
-        j = { k = "normal_mode"; }; # Maps `jk` to exit insert mode
-      };
-    };
   };
 }
