@@ -32,5 +32,11 @@
   programs.starship = {
     enable = true;
     presets = [ "plain-text-symbols" ];
+    settings = {
+      character = {
+        success_symbol = "[❯](red)[❯](yellow)[❯](green)";
+        error_symbol = "[❯❯❯](red)";
+      };
+    };
   };
 }
