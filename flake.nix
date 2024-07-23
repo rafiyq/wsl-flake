@@ -17,7 +17,7 @@
         }
 
         ({ pkgs, ... }: {
-          #users.defaultUserShell = pkgs.fish;
+          users.defaultUserShell = pkgs.fish;
 
           environment.systemPackages = [
             pkgs.aria2

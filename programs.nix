@@ -18,7 +18,12 @@
       gd = "git diff";
       gc = "git clone --recurse-submodules";
     };
-    interactiveShellInit = "set -U fish_greeting";
+    interactiveShellInit = ''
+      function border --on-event fish_postexec
+          string repeat --count $COLUMNS _
+      end
+      set -U fish_greeting
+    '';
   };
 
   programs.git = {
@@ -33,9 +38,10 @@
     enable = true;
     presets = [ "plain-text-symbols" ];
     settings = {
+      add_newline = false;
       character = {
-        success_symbol = "[❯](red)[❯](yellow)[❯](green)";
-        error_symbol = "[❯❯❯](red)";
+        success_symbol = "[❯](bold dimmed green)[❯](bold green)[❯](bold bright-green)";
+        error_symbol = "[❯](bold dimmed red)[❯](bold red)[❯](bold bright-red)";
       };
     };
   };
