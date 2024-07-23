@@ -2,10 +2,8 @@
 # https://github.com/nix-community/NixOS-WSL
 
 {
-  inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
-  };
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+  inputs.nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
 
   outputs = { self, nixpkgs, nixos-wsl, ... }: {
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
@@ -17,7 +15,19 @@
           wsl.enable = true;
           wsl.defaultUser = "user";
         }
-        ./configuration.nix
+
+        ({ pkgs, ... }: {
+          #users.defaultUserShell = pkgs.fish;
+
+          environment.systemPackages = [
+            pkgs.aria2
+            pkgs.helix
+          ];
+
+          nix.settings.experimental-features = ["nix-command" "flakes"];
+        })
+
+        ./programs.nix
       ];
     };
   };
