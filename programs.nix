@@ -2,15 +2,9 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
-  users.defaultUserShell = pkgs.fish;
-  environment.systemPackages = [
-    pkgs.aria2
-    pkgs.helix
-  ];
-
   programs.fish = {
     enable = true;
     shellAliases = {
@@ -37,5 +31,6 @@
 
   programs.starship = {
     enable = true;
+    presets = [ "plain-text-symbols" ];
   };
 }
