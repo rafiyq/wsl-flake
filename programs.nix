@@ -5,6 +5,12 @@
 { config, pkgs, ... }:
 
 {
+  environment.systemPackages = with pkgs; [
+    aria2
+    bat
+    helix
+  ];
+
   programs.fish = {
     enable = true;
     shellAliases = {
@@ -44,5 +50,29 @@
         error_symbol = "[❯](bold dimmed red)[❯](bold red)[❯](bold bright-red)";
       };
     };
+  };
+
+  programs.tmux = {
+    enable = true;
+    baseIndex = 1;
+    escapeTime = 0;
+    extraConfig = ''
+      set -g mouse on
+      set-option -g renumber-windows on
+
+      # Status Bar
+      set -g status-style bg=default
+      set -g status-left ' '
+      
+      set-window-option -g window-status-current-format "\
+        #[fg=white, bg=green] #{b:pane_current_path}\
+        #[fg=green, bg=white] #I \
+      "
+      set-window-option -g window-status-format "\
+        #[fg=grey, bg=colour245] #{b:pane_current_path}\
+        #[fg=colour245, bg=grey] #I \
+      "
+      set -g status-right "#[fg=white,bg=black] #W [#S] "
+    '';
   };
 }

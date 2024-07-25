@@ -18,12 +18,6 @@
 
         ({ pkgs, ... }: {
           users.defaultUserShell = pkgs.fish;
-
-          environment.systemPackages = [
-            pkgs.aria2
-            pkgs.helix
-          ];
-
           nix.settings.experimental-features = ["nix-command" "flakes"];
         })
 
